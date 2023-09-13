@@ -9,10 +9,10 @@ use Livewire\Attributes\Rule;
 class FormEdit extends Component
 {
     #[Rule('required|min:5')]
-    public $Name;
+    public $Name,$Phone;
     #[Rule('required|email')]
     public $Email;
-    public $id,$Phone;
+    public $id;
     protected $listeners = ['getPerson' => 'getPerson'];
 
     public function render()
@@ -42,7 +42,7 @@ class FormEdit extends Component
         }
         $this->dispatch('updated');
         $this->resetInputFields();
-        $this->dispatch('actualizado')->self();
+        $this->dispatch('actualizado');
 
 
 

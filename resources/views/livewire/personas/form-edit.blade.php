@@ -38,14 +38,5 @@
     </div>
   </div>
 
-  <script>
-    document.addEventListener('livewire:initialized', () => {
-       @this.on('actualizado', (event) => {
-           //alert('updated')
 
-           $('#editmodal').modal('hide');
-           //alert('updated')
-       });
-    });
-</script>
 </div>

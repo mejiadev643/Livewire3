@@ -1,7 +1,7 @@
 <div>
     {{-- Be like water. --}}
     <!-- Modal -->
-  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div wire:ignore.self class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -12,19 +12,24 @@
             <form class="row g-3">
                 <div class="col-auto">
                     <label for="staticEmail2" >Email</label>
-                    <input type="text" class="form-control" wire:model="Email" id="staticEmail2" value="email@example.com">
+                    <input type="text" class="form-control" wire:model.blur="Email" id="staticEmail2" value="email@example.com">
+                    @error('Email') <span class="error">{{ $message }}</span> @enderror
                   </div>
                   <div class="col-auto">
                     <label for="name" >Name</label>
-                    <input type="text" class="form-control" id="name" wire:model="Name" placeholder="nombre">
+                    <input type="text" class="form-control" id="name" wire:model.blur="Name" placeholder="nombre">
+                    @error('Name') <span class="error">{{ $message }}</span> @enderror
+
                   </div>
                   <div class="col-auto">
                     <label for="phone" >Phone</label>
-                    <input type="text" class="form-control" id="phone" wire:model="Phone" placeholder="+1 280 ...">
+                    <input type="text" class="form-control" id="phone" wire:model.blur="Phone" placeholder="+1 280 ...">
+                    @error('Phone') <span class="error">{{ $message }}</span> @enderror
+
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-primary" wire:click="store">Save changes</button>
                   </div>
 
             </form>
