@@ -12,7 +12,7 @@ class Persona extends Component
 {
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
-    protected $listeners = ['updated' => 'render'];
+    protected $listeners = ['updated' => 'render','delete'=>'delete'];
     public $search;
 
     #[Title('Personas Organización')]
@@ -26,12 +26,14 @@ class Persona extends Component
         $this->dispatch('getPerson',$persona);
     }
 
-    public function delete($id)
+    public function delete($id = null)
     {
+        #dd($id);
 
         if($id){
-            //Employee::where('id',$id)->delete();
-        $this->dispatch('mensaje',$mensaje= "sta e una cosa seria baki");
+            Employee::where('id',$id)->delete();
+        #$this->dispatch('mensaje',$mensaje= "sta e una cosa seria baki");
+            return $this->dispatch('eliminado');//metodo no funcional de momento
 
         }
     }

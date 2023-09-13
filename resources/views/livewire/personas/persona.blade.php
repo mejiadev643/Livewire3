@@ -5,12 +5,13 @@
     <livewire:personas.form-edit/>
 
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#store">
     Agregar
   </button>
 
-  <input class="" wire:model.live="search">Search</input>
-    <table class="table" style="width: 70%; ">
+  <input class="" wire:model.live="search"><button type="button" class="btn btn-sucess">search</button></input>
+   <div class="table-responsive-lg">
+    <table class="table align-middle" >
         <thead>
           <tr>
             <th scope="col">ID</th>
@@ -28,53 +29,67 @@
                 <td>{{$item->email}}</td>
                 <td>{{$item->phone}}</td>
                 <td >
-                    <button type="button" class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#editmodal" wire:click="enviarDato({{$item}})">Editar</button>
-                    <button type="button" class="btn btn-outline-danger" wire:click="delete({{$item}})">Eliminar</button>
+                    <button type="button" class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#editar" wire:click="enviarDato({{$item}}, 'editar')">Editar</button>
+                    <button type="button" class="btn btn-outline-danger" onclick="deleted({{$item->id}})">Eliminar</button>
                 </td>
               </tr>
             @endforeach
 
         </tbody>
       </table>
+   </div>
       <div>
         {{ $persona->links()}}
       </div>
       <script>
         document.addEventListener('livewire:initialized', () => {
            @this.on('actualizado', (event) => {
-               //alert('updated')
 
-               $('#editmodal').modal('hide');
-               updated("datos actualizados");
-               //alert('updated')
+
+               createupdate("Datos actualizados correctamente");
+               $('#editar').modal('hide');
+
            });
-           @this.on('creado',(men)=>{
-                $('#exampleModal').modal('hide');
-               updated("men");
+           @this.on('creado',()=>{
+                $('#store').modal('hide');
+               createupdate('Usuario registrado correctamente');
            });
-           @this.on('mensaje',(msj)=>{
-                $('#exampleModal').modal('hide');
-               updated(msj);
-           });
+           @this.on('eliminado',()=>{
+                Swal.fire(
+                    'Eliminado!',
+                    'El usuario ha sido eliminado correctamente',
+                    'success'
+                )
+            });
         });
     </script>
     <script>
-        function updated(mensaje) {
-            Toastify({
-  text: mensaje,
-  duration: 3000,
-  destination: "https://github.com/apvarun/toastify-js",
-  //className: "info",
-  newWindow: true,
-  close: true,
-  gravity: "top", // `top` or `bottom`
-  position: "right", // `left`, `center` or `right`
-  stopOnFocus: true, // Prevents dismissing of toast on hover
-  style: {
-    background: "linear-gradient(to right, #00b09b, #96c93d)",
-  },
-  onClick: function(){} // Callback after click
-}).showToast();
-        }
-    </script>
-</div>
+        function deleted(id)
+    {
+        Swal.fire({
+            title: 'Esta seguro?',
+            text: "No podras revertir este proceso!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sí, eliminalo!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Livewire.dispatch('delete',{'id': id})//fire
+
+            }
+        })
+    }
+    function createupdate(mensaje){
+        Swal.fire({
+  position: 'center',
+  icon: 'success',
+  title: mensaje,
+  showConfirmButton: true,
+  timer: 2000
+})
+    }
+
+</script>
+

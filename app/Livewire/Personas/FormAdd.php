@@ -30,6 +30,7 @@ class FormAdd extends Component
         ]);
 
         $this->resetInputFields();
+        $this->dispatch('updated');//render
         $this->dispatch('creado');
 
     }

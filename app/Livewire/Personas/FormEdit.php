@@ -40,9 +40,9 @@ class FormEdit extends Component
             $employee->phone = $this->Phone;
             $employee->save();
         }
-        $this->dispatch('updated');
+        $this->dispatch('updated');//render
         $this->resetInputFields();
-        $this->dispatch('actualizado');
+        $this->dispatch('actualizado',modal: 'modal');//mensaje en el front
 
 
 
